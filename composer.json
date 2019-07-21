@@ -4,7 +4,7 @@
     "keywords": ["yii2", "", "base"],
     "homepage": "https://github.com/solutosoft/yii-audit-record",
     "type": "yii2-extension",
-    "license": "BSD 3-Clause",
+    "license": "BSD-3-Clause",
     "authors": [
         {
             "name": "Leandro Guindani Gehlen",
