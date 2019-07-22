@@ -57,11 +57,11 @@ class AuditBehaviorTest extends TestCase
         $this->assertEquals(ActiveRecord::OP_DELETE, $row['operation']);
 
         $this->assertEquals([
-            'id' => ['new' => 2],
-            'name' => ['new' => 'Steve'],
-            'birthDate' => ['new' => '1983-04-20'],
-            'salary' => ['new' => 1000.50],
-            'updated_at' => ['new' => $updated_at]
+            'id' => ['old' => 2],
+            'name' => ['old' => 'Steve'],
+            'birthDate' => ['old' => '1983-04-20'],
+            'salary' => ['old' => 1000.50],
+            'updated_at' => ['old' => $updated_at]
         ], Json::decode($row['data']));
     }
 

@@ -73,46 +73,49 @@ class AuditBehavior extends Behavior
                 $operation = ActiveRecord::OP_DELETE;
         }
 
-        if ($operation & $this->operations) {
-
-            $update = $operation === ActiveRecord::OP_UPDATE;
-            $attributes = ($update) ? $event->changedAttributes : $this->owner->getAttributes();
-            $attributeNames = array_keys($attributes);
-
-            foreach (array_keys($attributeNames) as $name) {
-                if (in_array($name, $this->except)) {
-                    unset($attributes[$name]);
-                }
-            }
-
-            $user = Yii::$app->getUser();
-            if ($user->getIsGuest() || empty($attributes)) {
-                return;
-            }
-
-            $data = [];
-            foreach ($attributeNames as $name) {
-                $data[$name] = ['new' => $this->owner->{$name}];
-
-                if ($update) {
-                    $data[$name]['old'] = $attributes[$name];
-                }
-            }
-
-
-            $db = Yii::$app->getDb();
-            $tableName = $db->quoteTableName($this->tableName);
-            $db->createCommand()
-                ->insert($tableName, [
-                    'user_id' => $user->id,
-                    'record_id' => $this->owner->id,
-                    'operation' => $operation,
-                    'classname' => get_class($this->owner),
-                    'data' => $this->serializeData($data),
-                    'created_at' => $this->getCreatedAt()
-                ])
-                ->execute();
+        if (!($operation & $this->operations)) {
+            return;
         }
+
+        $update = $operation === ActiveRecord::OP_UPDATE;
+        $attributes = ($update) ? $event->changedAttributes : $this->owner->getAttributes();
+        $attributeNames = array_keys($attributes);
+
+        foreach (array_keys($attributeNames) as $name) {
+            if (in_array($name, $this->except)) {
+                unset($attributes[$name]);
+            }
+        }
+
+        $user = Yii::$app->getUser();
+        if ($user->getIsGuest() || empty($attributes)) {
+            return;
+        }
+
+        $data = [];
+        foreach ($attributeNames as $name) {
+            $key = $operation === ActiveRecord::OP_DELETE ? 'old' : 'new';
+            $data[$name] = [$key => $this->owner->{$name}];
+
+            if ($update) {
+                $data[$name]['old'] = $attributes[$name];
+            }
+        }
+
+
+        $db = Yii::$app->getDb();
+        $tableName = $db->quoteTableName($this->tableName);
+        $db->createCommand()
+            ->insert($tableName, [
+                'user_id' => $user->id,
+                'record_id' => $this->owner->id,
+                'operation' => $operation,
+                'classname' => get_class($this->owner),
+                'data' => $this->serializeData($data),
+                'created_at' => $this->getCreatedAt()
+            ])
+            ->execute();
+
     }
 
     /**
