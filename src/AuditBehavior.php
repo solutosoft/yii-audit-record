@@ -35,7 +35,7 @@ class AuditBehavior extends Behavior
      * In case, when the value is `null`, the result of the PHP function [time()](http://php.net/manual/en/function.time.php)
      * will be used as value.
      */
-    public $created_at;
+    public $createdAt;
 
     /**
      * @var string name of the DB table to store log content. Defaults to "record_audit".
@@ -112,7 +112,7 @@ class AuditBehavior extends Behavior
                 'operation' => $operation,
                 'classname' => get_class($this->owner),
                 'data' => $this->serializeData($data),
-                'created_at' => $this->getCreatedAt()
+                'created_at' => $this->extractCreatedAt()
             ])
             ->execute();
 
@@ -133,17 +133,17 @@ class AuditBehavior extends Behavior
      * to the attributes corresponding to the triggering event.
      * @return mixed the attribute value
      */
-    protected function getCreatedAt()
+    protected function extractCreatedAt()
     {
-        if ($this->created_at === null) {
+        if ($this->createdAt === null) {
             return time();
         }
 
-        if ($this->created_at instanceof Closure || (is_array($this->created_at) && is_callable($this->created_at))) {
-            return call_user_func($this->created_at, $this);
+        if ($this->createdAt instanceof Closure || (is_array($this->createdAt) && is_callable($this->createdAt))) {
+            return call_user_func($this->createdAt, $this);
         }
 
-        return $this->created_at;
+        return $this->createdAt;
     }
 
 
