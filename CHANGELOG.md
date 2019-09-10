@@ -1,7 +1,7 @@
 Yii Audit Record
 ================
 
-1.0.1 May 27, 2019
+1.0.1 Sep 10, 2019
 ------------------
 
 - Fixes change detections
