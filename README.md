@@ -1,4 +1,4 @@
-Yii Record Audit
+Yii Audit Record
 ================
 
 This extension provides support for store active record changes for Yii2.

@@ -81,7 +81,7 @@ class AuditBehavior extends Behavior
         $attributes = ($update) ? $event->changedAttributes : $this->owner->getAttributes();
         $attributeNames = array_keys($attributes);
 
-        foreach (array_keys($attributeNames) as $name) {
+        foreach ($attributeNames as $name) {
             if (in_array($name, $this->except)) {
                 unset($attributes[$name]);
             }
@@ -93,12 +93,17 @@ class AuditBehavior extends Behavior
         }
 
         $data = [];
-        foreach ($attributeNames as $name) {
-            $key = $operation === ActiveRecord::OP_DELETE ? 'old' : 'new';
-            $data[$name] = [$key => $this->owner->{$name}];
+        foreach ($attributes as $name => $old) {
+            $new = $this->owner->{$name};
 
-            if ($update) {
-                $data[$name]['old'] = $attributes[$name];
+            if ($old != $new) {
+                $data[$name] = ['new' => $new];
+
+                if ($update) {
+                    $data[$name]['old'] = $old;
+                }
+            } elseif ($operation === ActiveRecord::OP_DELETE) {
+                $data[$name] = ['old' => $old];
             }
         }
 
@@ -145,6 +150,4 @@ class AuditBehavior extends Behavior
 
         return $this->createdAt;
     }
-
-
 }
