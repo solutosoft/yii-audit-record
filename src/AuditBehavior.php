@@ -94,32 +94,34 @@ class AuditBehavior extends Behavior
 
         $data = [];
         foreach ($attributes as $name => $old) {
-            $new = $this->owner->{$name};
+            $value = $this->owner->{$name};
+            $changed = $old != $value;
 
-            if ($old != $new) {
-                $data[$name] = ['new' => $new];
+            if ($operation === ActiveRecord::OP_INSERT || $changed) {
+                $data[$name] = ['new' => $value];
 
                 if ($update) {
                     $data[$name]['old'] = $old;
                 }
             } elseif ($operation === ActiveRecord::OP_DELETE) {
-                $data[$name] = ['old' => $old];
+                $data[$name] = ['old' => $value];
             }
         }
 
-
-        $db = Yii::$app->getDb();
-        $tableName = $db->quoteTableName($this->tableName);
-        $db->createCommand()
-            ->insert($tableName, [
-                'user_id' => $user->id,
-                'record_id' => $this->owner->id,
-                'operation' => $operation,
-                'classname' => get_class($this->owner),
-                'data' => $this->serializeData($data),
-                'created_at' => $this->extractCreatedAt()
-            ])
-            ->execute();
+        if ($data) {
+            $db = Yii::$app->getDb();
+            $tableName = $db->quoteTableName($this->tableName);
+            $db->createCommand()
+                ->insert($tableName, [
+                    'user_id' => $user->id,
+                    'record_id' => $this->owner->id,
+                    'operation' => $operation,
+                    'classname' => get_class($this->owner),
+                    'data' => $this->serializeData($data),
+                    'created_at' => $this->extractCreatedAt()
+                ])
+                ->execute();
+        }
 
     }
 
