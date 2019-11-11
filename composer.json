@@ -31,8 +31,8 @@
     },
     "autoload": {
         "psr-4": {
-          "Soluto\\AuditRecord\\": "src",
-          "Soluto\\AuditRecord\\Tests\\": "tests"
+          "solutosoft\\auditrecord\\": "src",
+          "solutosoft\\auditrecord\\tests\\": "tests"
         },
         "exclude-from-classmap": [
             "/tests/"

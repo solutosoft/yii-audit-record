@@ -1,12 +1,12 @@
 <?php
 
-namespace Soluto\AuditRecord\Tests;
+namespace solutosoft\auditrecord\tests;
 
-use Soluto\AuditRecord\Tests\Data\Person;
 use Yii;
+use solutosoft\auditrecord\tests\models\Person;
+use yii\db\ActiveRecord;
 use yii\db\Query;
 use yii\helpers\Json;
-use yii\db\ActiveRecord;
 
 class AuditBehaviorTest extends TestCase
 {

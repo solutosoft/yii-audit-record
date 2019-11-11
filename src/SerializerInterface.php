@@ -5,7 +5,7 @@
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
-namespace Soluto\AuditRecord;
+namespace solutosoft\auditrecord;
 
 /**
  * SerializerInterface defines serializer interface.

@@ -1,12 +1,10 @@
 <?php
 
-namespace Soluto\AuditRecord\Tests\Data;
+namespace solutosoft\auditrecord\tests\models;
 
+use solutosoft\auditrecord\AuditBehavior;
 use yii\db\ActiveRecord;
-use Soluto\AuditRecord\AuditBehavior;
 use yii\web\IdentityInterface;
-use yii\db\Expression;
-use yii\behaviors\TimestampBehavior;
 
 /**
  * @property string $firstName

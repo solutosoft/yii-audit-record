@@ -1,6 +1,6 @@
 <?php
 
-namespace Soluto\AuditRecord;
+namespace solutosoft\auditrecord;
 
 use Yii;
 use yii\base\Behavior;
@@ -28,7 +28,7 @@ class AuditBehavior extends Behavior
     /**
      * @var string|array the configuration for creating the serializer that formats the response data.
      */
-    public $serializer = 'Soluto\AuditRecord\JsonSerializer';
+    public $serializer = 'solutosoft\auditrecord\JsonSerializer';
 
     /**
      * The `created_at` field value

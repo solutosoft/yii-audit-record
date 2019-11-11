@@ -1,6 +1,6 @@
 <?php
 
-namespace Soluto\AuditRecord\Tests;
+namespace solutosoft\auditrecord\tests;
 
 use Yii;
 use yii\helpers\ArrayHelper;
