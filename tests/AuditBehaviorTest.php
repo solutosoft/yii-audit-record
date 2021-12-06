@@ -39,7 +39,6 @@ class AuditBehaviorTest extends TestCase
         ], $row->data->toArray());
 
 
-
         $person->birthDate = '1983-04-20';
         $person->save();
         $row = $person->history[0];
