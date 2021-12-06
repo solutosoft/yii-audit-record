@@ -1,6 +1,11 @@
 Yii Audit Record
 ================
 
+3.0.1 Dec 06, 2020
+------------------
+
+- Hide `classname` and `record_id` attributes
+
 3.0.0 Dec 06, 2020
 ------------------
 

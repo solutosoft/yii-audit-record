@@ -63,4 +63,22 @@ class AuditBehaviorTest extends TestCase
         ], $row->data->toArray());
     }
 
+
+    public function testFields()
+    {
+        $person = new Person([
+            'name' => 'Steve',
+            'birthDate' => '1955-02-24',
+            'salary' => 1000.50,
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+
+        $person->save();
+        $fields = $person->history[0]->toArray();
+
+        $this->assertArrayNotHasKey('classname', $fields);
+        $this->assertArrayNotHasKey('record_id', $fields);
+    }
+
 }
+
