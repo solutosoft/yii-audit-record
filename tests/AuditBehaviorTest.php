@@ -8,7 +8,7 @@ use yii\db\ActiveRecord;
 
 class AuditBehaviorTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $identity = Person::findIdentity(1);

@@ -6,14 +6,13 @@
   convertWarningsToExceptions="true"
   stopOnFailure="false">
   <testsuites>
-    <testsuite name="Base Test Suite">
+    <testsuite name="Audit Record Test Suite">
       <directory>./tests</directory>
     </testsuite>
   </testsuites>
   <filter>
-    <blacklist>
-      <directory>tests</directory>
-      <directory>vendor</directory>
-    </blacklist>
+    <whitelist processUncoveredFilesFromWhitelist="true">
+      <directory suffix=".php">./src</directory>
+    </whitelist>
   </filter>
 </phpunit>
