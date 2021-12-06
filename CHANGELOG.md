@@ -1,6 +1,11 @@
 Yii Audit Record
 ================
 
+3.0.0 under development
+-----------------------
+
+- Complete refactoring in favor ActiveRercord concept
+
 2.0.0 Nov 20, 2019
 ------------------
 

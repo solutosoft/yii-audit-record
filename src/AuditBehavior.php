@@ -2,10 +2,15 @@
 
 namespace solutosoft\auditrecord;
 
+use Closure;
 use Yii;
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
+use yii\db\Query;
 
+/**
+ * @property-read array $history Array of record changes records indexed by relation names. This property
+ */
 class AuditBehavior extends Behavior
 {
     /**
@@ -24,11 +29,6 @@ class AuditBehavior extends Behavior
      * @var integer
      */
     public $operations = ActiveRecord::OP_ALL;
-
-    /**
-     * @var string|array the configuration for creating the serializer that formats the response data.
-     */
-    public $serializer = 'solutosoft\auditrecord\JsonSerializer';
 
     /**
      * The `created_at` field value
@@ -109,30 +109,42 @@ class AuditBehavior extends Behavior
         }
 
         if ($data) {
-            $db = Yii::$app->getDb();
-            $tableName = $db->quoteTableName($this->tableName);
-            $db->createCommand()
-                ->insert($tableName, [
-                    'user_id' => $user->id,
-                    'record_id' => $this->owner->id,
-                    'operation' => $operation,
-                    'classname' => get_class($this->owner),
-                    'data' => $this->serializeData($data),
-                    'created_at' => $this->extractCreatedAt()
-                ])
-                ->execute();
-        }
+            $audit = new Audit([
+                'user_id' => $user->id,
+                'record_id' => $this->owner->id,
+                'operation' => $operation,
+                'classname' => get_class($this->owner),
+                'created_at' => $this->extractCreatedAt()
+            ]);
 
+            $audit->data->set($data);
+            $audit->save(false);
+        }
     }
 
     /**
-     * Serializes given attributes into a string.
-     * @param array $data attributes to be serialized in format: name => value
-     * @return string serialized attributes.
+     * Create instance for query purpose.
+     * @return \yii\db\ActiveQuery
      */
-    protected function serializeData($data)
+    public function getHistory()
     {
-        return Yii::createObject($this->serializer)->serialize($data);
+        return Audit::find()
+            ->where([
+                'record_id' => $this->owner->id,
+                'classname' => get_class($this->owner)
+            ])
+            ->orderBy(['id' => SORT_DESC]);
+    }
+
+    /**
+     * PHP getter magic method.
+     * @param string $name property name
+     * @return mixed property value
+     */
+    public function __get($name)
+    {
+        $value = parent::__get($name);
+        return $value instanceof Query ? $value->all() : $value;
     }
 
     /**

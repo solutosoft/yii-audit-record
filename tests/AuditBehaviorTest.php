@@ -5,8 +5,6 @@ namespace solutosoft\auditrecord\tests;
 use Yii;
 use solutosoft\auditrecord\tests\models\Person;
 use yii\db\ActiveRecord;
-use yii\db\Query;
-use yii\helpers\Json;
 
 class AuditBehaviorTest extends TestCase
 {
@@ -28,9 +26,9 @@ class AuditBehaviorTest extends TestCase
         ]);
 
         $person->save();
-        $row = $this->getLastRow();
+        $row = $person->history[0];
 
-        $this->assertEquals(ActiveRecord::OP_INSERT, $row['operation']);
+        $this->assertEquals(ActiveRecord::OP_INSERT, $row->operation);
 
         $this->assertEquals([
             'id' => ['new' => 2],
@@ -38,23 +36,24 @@ class AuditBehaviorTest extends TestCase
             'birthDate' => ['new' => '1955-02-24'],
             'salary' => ['new' => 1000.50],
             'updated_at' => ['new' => $updated_at]
-        ], Json::decode($row['data']));
+        ], $row->data->toArray());
+
+
 
         $person->birthDate = '1983-04-20';
         $person->save();
-        $row = $this->getLastRow();
+        $row = $person->history[0];
 
-        $this->assertEquals(ActiveRecord::OP_UPDATE, $row['operation']);
+        $this->assertEquals(ActiveRecord::OP_UPDATE, $row->operation);
 
         $this->assertEquals([
             'birthDate' => ['old' => '1955-02-24', 'new' => '1983-04-20'],
-        ], Json::decode($row['data']));
-
+        ], $row->data->toArray());
 
         $person->delete();
-        $row = $this->getLastRow();
+        $row = $person->history[0];
 
-        $this->assertEquals(ActiveRecord::OP_DELETE, $row['operation']);
+        $this->assertEquals(ActiveRecord::OP_DELETE, $row->operation);
 
         $this->assertEquals([
             'id' => ['old' => 2],
@@ -62,18 +61,7 @@ class AuditBehaviorTest extends TestCase
             'birthDate' => ['old' => '1983-04-20'],
             'salary' => ['old' => 1000.50],
             'updated_at' => ['old' => $updated_at]
-        ], Json::decode($row['data']));
+        ], $row->data->toArray());
     }
-
-    private function getLastRow()
-    {
-        return (new Query())
-            ->from('audit')
-            ->orderBy(['id' => SORT_DESC])
-            ->limit(1)
-            ->one();
-    }
-
-
 
 }
