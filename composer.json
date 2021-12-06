@@ -27,7 +27,6 @@
       "url": "https://asset-packagist.org"
     }
   ],
-  "minimum-stability": "dev",
   "require": {
     "yiisoft/yii2": "~2.0.14",
     "paulzi/yii2-json-behavior": "~1.0.7"
@@ -43,5 +42,10 @@
     "exclude-from-classmap": [
       "/tests/"
     ]
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "3.0.x-dev"
+    }
   }
 }
