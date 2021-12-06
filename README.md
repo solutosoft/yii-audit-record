@@ -3,9 +3,7 @@ Yii Audit Record
 
 This extension provides support for store active record changes for Yii2.
 
-[![Build Status](https://travis-ci.org/solutosoft/yii-audit-record.svg?branch=master)](https://travis-ci.org/solutosoft/yii-audit-record)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/solutosoft/yii-audit-record/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/solutosoft/yii-audit-record/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/solutosoft/yii-audit-record/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/solutosoft/yii-audit-record/?branch=master)
+[![Build Status](https://github.com/solutosoft/yii-audit-record/actions/workflows/tests.yml/badge.svg)](https://github.com/solutosoft/yii-audit-record/actions)
 [![Total Downloads](https://poser.pugx.org/solutosoft/yii-audit-record/downloads.png)](https://packagist.org/packages/solutosoft/yii-audit-record)
 [![Latest Stable Version](https://poser.pugx.org/solutosoft/yii-audit-record/v/stable.png)](https://packagist.org/packages/solutosoft/yii-audit-record)
 
