@@ -2,6 +2,7 @@
 
 namespace solutosoft\auditrecord;
 
+use Yii;
 use paulzi\jsonBehavior\JsonBehavior;
 use yii\db\ActiveRecord;
 
@@ -30,6 +31,15 @@ class Audit extends ActiveRecord
         unset($fields['classname'], $fields['record_id']);
 
         return $fields;
+    }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(Yii::$app->user->identityClass, ['id' => 'user_id']);
     }
 
     /**

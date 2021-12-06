@@ -48,9 +48,10 @@ class AuditBehavior extends Behavior
     public function events()
     {
         return [
-            ActiveRecord::EVENT_AFTER_INSERT => 'store',
-            ActiveRecord::EVENT_AFTER_UPDATE => 'store',
-            ActiveRecord::EVENT_AFTER_DELETE => 'store'
+            'afterInsert' => 'store',
+            'afterUpdate' => 'store',
+            'afterDelete' => 'store',
+            'afterSoftDelete' => 'store'
         ];
     }
 
@@ -60,17 +61,14 @@ class AuditBehavior extends Behavior
      */
     public function store($event)
     {
-        switch ($event->name) {
-            case ActiveRecord::EVENT_AFTER_INSERT:
+        $operation = ActiveRecord::OP_DELETE;
+
+        if ($event) {
+            if ($event->name === ActiveRecord::EVENT_AFTER_INSERT) {
                 $operation = ActiveRecord::OP_INSERT;
-                break;
-
-            case ActiveRecord::EVENT_AFTER_UPDATE:
+            } elseif ($event->name === ActiveRecord::EVENT_AFTER_UPDATE) {
                 $operation = ActiveRecord::OP_UPDATE;
-                break;
-
-            default:
-                $operation = ActiveRecord::OP_DELETE;
+            }
         }
 
         if (!($operation & $this->operations)) {
