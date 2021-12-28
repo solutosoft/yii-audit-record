@@ -1,8 +1,8 @@
 Yii Audit Record
 ================
 
-3.0.2 Under development
------------------------
+3.0.3 Dec 28, 2021
+------------------
 
 - Added `userRelation` event allowing to customize user relationship query
 
