@@ -8,6 +8,8 @@ use yii\db\ActiveRecord;
 
 class Audit extends ActiveRecord
 {
+    const EVENT_USER_RELATION = 'userRelation';
+
 
     /**
      * {@inheritdoc}
@@ -39,7 +41,11 @@ class Audit extends ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(Yii::$app->user->identityClass, ['id' => 'user_id']);
+        $query = $this->hasOne(Yii::$app->user->identityClass, ['id' => 'user_id']);
+
+        $this->trigger(self::EVENT_USER_RELATION, new AuditRelationEvent(['query' => $query]));
+
+        return $query;
     }
 
     /**

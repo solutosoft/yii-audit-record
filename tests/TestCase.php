@@ -46,7 +46,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
                 ],
                 'user' => [
-                    'identityClass' => 'Soluto\Tests\Data\Person',
+                    'identityClass' => 'solutosoft\auditrecord\tests\models\User',
                     'enableSession' => false
                 ],
                 'request' => [
@@ -84,7 +84,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
             'created_at' => 'integer'
         ])->execute();
 
-        $db->createCommand()->createTable('person', [
+        $db->createCommand()->createTable('users', [
             'id' => 'pk',
             'name' => 'string',
             'birthDate' => 'date',
@@ -92,6 +92,6 @@ class TestCase extends \PHPUnit\Framework\TestCase
             'updated_at' => 'datetime'
         ])->execute();
 
-        $db->getSchema()->insert('person', ['name' => 'User']);
+        $db->getSchema()->insert('users', ['name' => 'User']);
     }
 }

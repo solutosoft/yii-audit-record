@@ -19,7 +19,7 @@ use yii\web\IdentityInterface;
  * @property Contact[] $contacts
  * @property Tag[] $tags
  */
-class Person extends ActiveRecord implements IdentityInterface
+class User extends ActiveRecord implements IdentityInterface
 {
 
     /**
@@ -39,23 +39,7 @@ class Person extends ActiveRecord implements IdentityInterface
      */
     public static function tableName()
     {
-        return 'person';
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProfile()
-    {
-        return $this->hasOne(Profile::className(), ['id' => 'profile_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getMessages()
-    {
-        return $this->hasMany(Message::className(), ['person_id' => 'id']);
+        return 'users';
     }
 
     /**

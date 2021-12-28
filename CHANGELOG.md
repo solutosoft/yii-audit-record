@@ -1,13 +1,17 @@
 Yii Audit Record
 ================
 
-3.0.2 Dec 06, 2020
+3.0.2 Under development
+-----------------------
+
+- Added `userRelation` event allowing to customize user relationship query
+
+3.0.2 Dec 06, 2021
 ------------------
 
 - Complete refactoring in favor ActiveRercord concept
 - Hide `classname` and `record_id` attributes
 - Handle `afterSoftDelete` event
-
 
 2.0.0 Nov 20, 2019
 ------------------
