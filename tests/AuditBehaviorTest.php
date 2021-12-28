@@ -21,15 +21,15 @@ class AuditBehaviorTest extends TestCase
     public function testStoreChanges()
     {
         $updated_at =  date('Y-m-d H:i:s');
-        $User = new User([
+        $user = new User([
             'name' => 'Steve',
             'birthDate' => '1955-02-24',
             'salary' => 1000.50,
             'updated_at' => $updated_at
         ]);
 
-        $User->save();
-        $row = $User->history[0];
+        $user->save();
+        $row = $user->history[0];
 
         $this->assertEquals(ActiveRecord::OP_INSERT, $row->operation);
 
@@ -42,9 +42,9 @@ class AuditBehaviorTest extends TestCase
         ], $row->data->toArray());
 
 
-        $User->birthDate = '1983-04-20';
-        $User->save();
-        $row = $User->history[0];
+        $user->birthDate = '1983-04-20';
+        $user->save();
+        $row = $user->history[0];
 
         $this->assertEquals(ActiveRecord::OP_UPDATE, $row->operation);
 
@@ -52,8 +52,8 @@ class AuditBehaviorTest extends TestCase
             'birthDate' => ['old' => '1955-02-24', 'new' => '1983-04-20'],
         ], $row->data->toArray());
 
-        $User->delete();
-        $row = $User->history[0];
+        $user->delete();
+        $row = $user->history[0];
 
         $this->assertEquals(ActiveRecord::OP_DELETE, $row->operation);
 
@@ -69,15 +69,15 @@ class AuditBehaviorTest extends TestCase
 
     public function testFields()
     {
-        $User = new User([
+        $user = new User([
             'name' => 'Steve',
             'birthDate' => '1955-02-24',
             'salary' => 1000.50,
             'updated_at' => date('Y-m-d H:i:s')
         ]);
 
-        $User->save();
-        $fields = $User->history[0]->toArray();
+        $user->save();
+        $fields = $user->history[0]->toArray();
 
         $this->assertArrayNotHasKey('classname', $fields);
         $this->assertArrayNotHasKey('record_id', $fields);
@@ -90,12 +90,12 @@ class AuditBehaviorTest extends TestCase
             $this->assertNotNull($event->query);
         });
 
-        $User = new User([
+        $user = new User([
             'name' => 'Steve'
         ]);
 
-        $User->save();
-        $User->history[0]->user;
+        $user->save();
+        $user->history[0]->user;
     }
 
 }
