@@ -48,10 +48,9 @@ class AuditBehavior extends Behavior
     public function events()
     {
         return [
-            'afterInsert' => 'store',
-            'afterUpdate' => 'store',
-            'afterDelete' => 'store',
-            'afterSoftDelete' => 'store'
+            ActiveRecord::EVENT_AFTER_INSERT => 'store',
+            ActiveRecord::EVENT_AFTER_UPDATE => 'store',
+            ActiveRecord::EVENT_AFTER_DELETE => 'store'
         ];
     }
 
