@@ -1,7 +1,7 @@
 Yii Audit Record
 ================
 
-3.1.0 Under development
+3.1.0 Jan 11, 2022
 -----------------------
 
 - Unhandled `afterSoftDelete` event
