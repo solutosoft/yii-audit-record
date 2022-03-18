@@ -6,7 +6,6 @@ use Yii;
 use solutosoft\auditrecord\Audit;
 use solutosoft\auditrecord\tests\models\User;
 use yii\base\Event;
-use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 class AuditBehaviorTest extends TestCase
@@ -39,7 +38,7 @@ class AuditBehaviorTest extends TestCase
             'birthDate' => ['new' => '1955-02-24'],
             'salary' => ['new' => 1000.50],
             'updated_at' => ['new' => $updated_at]
-        ], $row->data->toArray());
+        ], $row->data);
 
 
         $user->birthDate = '1983-04-20';
@@ -50,7 +49,7 @@ class AuditBehaviorTest extends TestCase
 
         $this->assertEquals([
             'birthDate' => ['old' => '1955-02-24', 'new' => '1983-04-20'],
-        ], $row->data->toArray());
+        ], $row->data);
 
         $user->delete();
         $row = $user->history[0];
@@ -63,7 +62,7 @@ class AuditBehaviorTest extends TestCase
             'birthDate' => ['old' => '1983-04-20'],
             'salary' => ['old' => 1000.50],
             'updated_at' => ['old' => $updated_at]
-        ], $row->data->toArray());
+        ], $row->data);
     }
 
 

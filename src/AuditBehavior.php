@@ -114,7 +114,7 @@ class AuditBehavior extends Behavior
                 'created_at' => $this->extractCreatedAt()
             ]);
 
-            $audit->data->set($data);
+            $audit->data = $data;
             $audit->save(false);
         }
     }

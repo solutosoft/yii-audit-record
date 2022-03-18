@@ -1,8 +1,13 @@
 Yii Audit Record
 ================
 
+3.2.0 Mar 18, 2022
+------------------
+
+- Removed `paulzi/yii2-json-behavior` dependency
+
 3.1.0 Jan 11, 2022
------------------------
+------------------
 
 - Unhandled `afterSoftDelete` event
 

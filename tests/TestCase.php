@@ -37,12 +37,8 @@ class TestCase extends \PHPUnit\Framework\TestCase
             'components' => [
                 'db' => [
                     'class' => 'yii\db\Connection',
-                    'dsn' => 'sqlite::memory:',
-                    /*'dsn' => 'mysql:host=mysql;dbname=audit-record',
-                    'username' => 'root',
-                    'password' => 'root',
-                    'charset' => 'utf8',
-                    'enableSchemaCache' => false*/
+                    'dsn' => 'sqlite::memory:'
+
 
                 ],
                 'user' => [
@@ -80,7 +76,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
             'record_id' => 'string',
             'classname' => 'date',
             'operation' => 'integer',
-            'data' => 'text',
+            'data' => 'json CHECK(json_valid(`data`))',
             'created_at' => 'integer'
         ])->execute();
 

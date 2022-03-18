@@ -28,8 +28,7 @@
     }
   ],
   "require": {
-    "yiisoft/yii2": "~2.0.14",
-    "paulzi/yii2-json-behavior": "~1.0.7"
+    "yiisoft/yii2": "^2.0.14"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.5 || ^8.0"
@@ -46,6 +45,11 @@
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true
     }
   }
 }

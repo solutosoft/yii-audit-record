@@ -3,25 +3,12 @@
 namespace solutosoft\auditrecord;
 
 use Yii;
-use paulzi\jsonBehavior\JsonBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\Json;
 
 class Audit extends ActiveRecord
 {
     const EVENT_USER_RELATION = 'userRelation';
-
-
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors() {
-        return [
-            [
-                'class' => JsonBehavior::class,
-                'attributes' => ['data'],
-            ],
-        ];
-    }
 
     /**
      * {@inheritdoc}
@@ -34,7 +21,6 @@ class Audit extends ActiveRecord
 
         return $fields;
     }
-
 
     /**
      * @return \yii\db\ActiveQuery
@@ -55,4 +41,26 @@ class Audit extends ActiveRecord
     {
         return '{{%audit}}';
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __set($name, $value)
+    {
+        if ($name === 'data') {
+            $this->setAttribute($name, Json::encode($value));
+        } else {
+            parent::__set($name, $value);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __get($name)
+    {
+        $result = parent::__get($name);
+        return $name === 'data' ? Json::decode($result) : $result;
+    }
+
 }
